@@ -32,7 +32,7 @@ def max_loot(W, cost_list, weight_list, unit_value_list):
 
 if __name__ == '__main__':
 
-    input1_digits = input("The number n of compounds & the capacity W of a backpack:").split()
+    input1_digits = input().split()
     n_compound = int(input1_digits[0])
     W_capacity = int(input1_digits[1])
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
     compound_unit_value_list = []
 
     for i in range(n_compound):
-        compound_info = input(f"The cost and weight of {i+1}th compound:").split()
+        compound_info = input().split()
         compound_cost_list.append(int(compound_info[0]))
         compound_weight_list.append(int(compound_info[1]))
         compound_unit_value_list.append(int(compound_info[0]) / int(compound_info[1]))

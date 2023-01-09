@@ -18,7 +18,7 @@ def count_min_fuel_stops(d, m, n, stops_list):
         possible_stops = []
 
         for stop in stops_list:
-            if current_location < stop < (current_location + m):
+            if current_location < stop <= (current_location + m):
                 possible_stops.append(stop)
 
         if len(possible_stops) > 0:
