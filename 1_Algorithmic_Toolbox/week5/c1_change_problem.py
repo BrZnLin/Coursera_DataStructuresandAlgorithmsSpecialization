@@ -1,41 +1,60 @@
 # Change Problem
 
-# further modify the function from c1_binary_search
-def change_problem(number_list, key):
+import math
 
-    low = 0
-    high = len(number_list) - 1
 
-    start_index = -1
+# Greedy algorithm can't solve with the optimal solution in some cases.
+# Such as greedy_change(12, [10, 6, 1])
+def greedy_change(money, coins):
+    change_coins_count = 0
 
-    while low <= high:
-        mid = int(low + (high - low) // 2)
+    for denomination in coins:
+        if denomination <= money != 0:
+            change_coins_count += money // denomination
 
-        if number_list[mid] == key:
+            money = money % denomination
 
-            start_index = mid
+    return change_coins_count
 
-            high = mid - 1
 
-        elif number_list[mid] > key:
-            high = mid - 1
+# Recursive algorithm can solve with optimal solution,
+# but can take very long time.
+def recursive_change(money, coins):
+    if money == 0:
+        return 0
 
-        else:
-            low = mid + 1
+    min_num_coins = float('inf')
 
-    # if key is not present in the list, return -1
-    return start_index
+    for i in range(len(coins)):
+        if money >= coins[i]:
+            num_coins = recursive_change(money - coins[i], coins)
+
+            if num_coins + 1 < min_num_coins:
+                min_num_coins = num_coins + 1
+
+    return min_num_coins
+
+
+def dp_change(money, coins):
+
+    # set base case for money = 0
+    min_num_coin_list = [0]
+
+    # for m from 1 to money
+    for m in range(1, money + 1):
+        min_num_coin_list.append(math.inf)
+
+        for i in range(len(coins)):
+            if m >= coins[i]:
+                num_coins = min_num_coin_list[m - coins[i]] + 1
+                if num_coins < min_num_coin_list[m]:
+                    min_num_coin_list[m] = num_coins
+
+    return min_num_coin_list[money]
 
 
 if __name__ == '__main__':
     input1 = int(input())
     input2_list = [int(i) for i in input().split()]
-    input3 = int(input())
-    input4_list = [int(i) for i in input().split()]
 
-    output_list = []
-
-    for num in input4_list:
-        output_list.append(binary_search_iterative_further(input2_list, num))
-
-    print(*output_list)
+    print(dp_change(input1, input2_list))

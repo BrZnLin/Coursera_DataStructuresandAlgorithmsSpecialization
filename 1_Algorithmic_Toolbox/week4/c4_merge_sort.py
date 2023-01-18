@@ -1,5 +1,6 @@
 """
-
+Split into halves recursively,
+and then sort
 """
 
 
